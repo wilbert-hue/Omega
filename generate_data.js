@@ -3,163 +3,121 @@ const path = require('path');
 
 const years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
 
-/** Latin America markets only (per dashboard geography spec) */
-const GEOGRAPHIES = ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'];
-
-const countryShares = {
-  Brazil: 0.45,
-  Argentina: 0.15,
-  Mexico: 0.25,
-  'Rest of Latin America': 0.15,
+/**
+ * Region weights (sum = 1) and per-country weights within each region (normalized in code).
+ * Matches lib/geography-hierarchy.ts country names.
+ */
+const REGION_MARKET_SHARE = {
+  'North America': 0.24,
+  Europe: 0.3,
+  'Asia Pacific': 0.34,
+  'Latin America': 0.12,
 };
 
-/** Total regional market (USD million), 2021 — split across the four countries */
-const laTotalBase2021 = 32;
-
-const regionGrowthRates = {
-  Brazil: 0.138,
-  Argentina: 0.118,
-  Mexico: 0.128,
-  'Rest of Latin America': 0.125,
+const COUNTRIES_BY_REGION = {
+  'North America': {
+    'U.S.': { w: 0.62, g: 0.126 },
+    Canada: { w: 0.38, g: 0.114 },
+  },
+  Europe: {
+    'U.K.': { w: 0.12, g: 0.116 },
+    Germany: { w: 0.16, g: 0.115 },
+    Italy: { w: 0.09, g: 0.108 },
+    France: { w: 0.13, g: 0.112 },
+    Netherland: { w: 0.07, g: 0.118 },
+    Spain: { w: 0.09, g: 0.111 },
+    Belgium: { w: 0.05, g: 0.11 },
+    Russia: { w: 0.06, g: 0.095 },
+    'Rest of Europe': { w: 0.23, g: 0.104 },
+  },
+  'Asia Pacific': {
+    China: { w: 0.24, g: 0.132 },
+    India: { w: 0.14, g: 0.138 },
+    Japan: { w: 0.18, g: 0.108 },
+    'South Korea': { w: 0.1, g: 0.118 },
+    Singapore: { w: 0.06, g: 0.12 },
+    Thailand: { w: 0.07, g: 0.125 },
+    Indonesia: { w: 0.09, g: 0.133 },
+    Australia: { w: 0.1, g: 0.115 },
+    'Rest of Asia Pacific': { w: 0.02, g: 0.128 },
+  },
+  'Latin America': {
+    Brazil: { w: 0.42, g: 0.138 },
+    Argentina: { w: 0.14, g: 0.118 },
+    Mexico: { w: 0.28, g: 0.128 },
+    'Rest of Latin America': { w: 0.16, g: 0.125 },
+  },
 };
+
+/** Global market (USD million), 2021 — split across all countries */
+const globalTotalBase2021 = 520;
 
 const volumePerMillionUSD = 520;
 
-/* --- Segment tree specs: share = fraction of parent; leaves also have growthMul --- */
+const GEOGRAPHIES = [];
+const countryShares = {};
+const regionGrowthRates = {};
 
-const byBciModalityRoot = {
-  'Non-Invasive BCI': {
-    share: 0.68,
-    children: {
-      'EEG-based BCI': {
-        share: 0.58,
-        children: {
-          'Motor imagery (MI)': { share: 0.34, growthMul: 1.02 },
-          'P300-based systems': { share: 0.33, growthMul: 1.05 },
-          'SSVEP (Steady-State Visual Evoked Potential)': { share: 0.33, growthMul: 1.03 },
-        },
-      },
-      'Hybrid BCI systems (EEG + eye tracking / EMG)': { share: 0.22, growthMul: 1.12 },
-      'fNIRS-based BCI (emerging, low penetration)': { share: 0.2, growthMul: 1.18 },
-    },
-  },
-  'Minimally Invasive BCI': { share: 0.07, growthMul: 1.15 },
-  'Fully Invasive BCI': {
-    share: 0.25,
-    children: {
-      'Implanted cortical electrodes': { share: 0.35, growthMul: 1.08 },
-      'Intracortical arrays': { share: 0.4, growthMul: 1.1 },
-      'ECoG-based systems': { share: 0.25, growthMul: 1.06 },
-    },
-  },
+for (const region of Object.keys(REGION_MARKET_SHARE)) {
+  const block = COUNTRIES_BY_REGION[region];
+  const wSum = Object.values(block).reduce((s, x) => s + x.w, 0);
+  const regionWeight = REGION_MARKET_SHARE[region];
+  for (const [country, spec] of Object.entries(block)) {
+    GEOGRAPHIES.push(country);
+    const within = spec.w / wSum;
+    countryShares[country] = regionWeight * within;
+    regionGrowthRates[country] = spec.g;
+  }
+}
+
+/* --- Omega-3 ingredients segment trees: share = fraction of parent; leaves also have growthMul --- */
+
+const byProductTypeRoot = {
+  'Algal DHA Oil': { share: 0.18, growthMul: 1.06 },
+  'Algal EPA Oil': { share: 0.14, growthMul: 1.05 },
+  'Blended Omega Oils': { share: 0.16, growthMul: 1.07 },
+  'Flaxseed Oil': { share: 0.11, growthMul: 1.03 },
+  'Chia Seed Oil': { share: 0.09, growthMul: 1.08 },
+  'Hemp Seed Oil': { share: 0.1, growthMul: 1.04 },
+  'Perilla Oil': { share: 0.08, growthMul: 1.02 },
+  'Ahiflower Oil': { share: 0.14, growthMul: 1.09 },
 };
 
-const byApplicationRoot = {
-  'Communication Restoration': { share: 0.28, growthMul: 1.04 },
-  'Environmental & Device Control': { share: 0.26, growthMul: 1.06 },
-  'Mobility & Motor Assistance': { share: 0.26, growthMul: 1.08 },
-  'Rehabilitation & Neuro-recovery': { share: 0.2, growthMul: 1.1 },
+const byOmegaTypeRoot = {
+  'Omega-3': {
+    share: 0.46,
+    children: {
+      ALA: { share: 0.18, growthMul: 1.02 },
+      DHA: { share: 0.32, growthMul: 1.06 },
+      EPA: { share: 0.28, growthMul: 1.05 },
+      'DHA + EPA': { share: 0.22, growthMul: 1.07 },
+    },
+  },
+  'Omega-6': { share: 0.22, growthMul: 1.04 },
+  'Omega-9': { share: 0.17, growthMul: 1.03 },
+  'Omega 3-6-9 Blends': { share: 0.15, growthMul: 1.08 },
 };
 
-const byEndUserRoot = {
-  share: 1,
-  children: {
-    'Clinical Condition': {
-      share: 0.55,
-      children: {
-        'Neurodegenerative Disorders': {
-          share: 0.22,
-          children: {
-            'ALS (primary target segment)': { share: 0.62, growthMul: 1.08 },
-            'Multiple sclerosis (advanced stage)': { share: 0.38, growthMul: 1.04 },
-          },
-        },
-        'Stroke Survivors': {
-          share: 0.2,
-          children: {
-            'Ischemic stroke (severe disability)': { share: 0.55, growthMul: 1.03 },
-            'Hemorrhagic stroke': { share: 0.45, growthMul: 1.02 },
-          },
-        },
-        'Spinal Cord Injury (SCI)': {
-          share: 0.18,
-          children: {
-            'Tetraplegia (high priority)': { share: 0.55, growthMul: 1.1 },
-            Paraplegia: { share: 0.45, growthMul: 1.05 },
-          },
-        },
-        'Cerebral Palsy (Severe Motor Impairment)': {
-          share: 0.12,
-          children: {
-            'Non-verbal CP patients': { share: 1, growthMul: 1.06 },
-          },
-        },
-        'Other Severe Motor Impairments': {
-          share: 0.28,
-          children: {
-            'Locked-in syndrome': { share: 0.35, growthMul: 1.12 },
-            'Traumatic brain injury (TBI)': { share: 0.65, growthMul: 1.04 },
-          },
-        },
-      },
-    },
-    'End-User Setting': {
-      share: 0.45,
-      children: {
-        'Institutional Healthcare': {
-          share: 0.42,
-          children: {
-            'Rehabilitation hospitals': { share: 0.4, growthMul: 1.0 },
-            'Neurology clinics': { share: 0.35, growthMul: 1.02 },
-            'Long-term care centers': { share: 0.25, growthMul: 1.01 },
-          },
-        },
-        'Home Care Settings': {
-          share: 0.32,
-          children: {
-            'Direct-to-patient deployment': { share: 0.5, growthMul: 1.14 },
-            'Caregiver-assisted usage': { share: 0.5, growthMul: 1.1 },
-          },
-        },
-        'Research & Clinical Trials': {
-          share: 0.26,
-          children: {
-            Universities: { share: 0.55, growthMul: 1.07 },
-            'Neuroscience labs': { share: 0.45, growthMul: 1.09 },
-          },
-        },
-      },
-    },
-  },
+const byFormRoot = {
+  'Crude Oil': { share: 0.12, growthMul: 0.99 },
+  'Refined Oil': { share: 0.24, growthMul: 1.02 },
+  'Concentrated Oil': { share: 0.22, growthMul: 1.06 },
+  'Powdered Omega Ingredient': { share: 0.18, growthMul: 1.09 },
+  'Encapsulated Oil': { share: 0.14, growthMul: 1.05 },
+  'Emulsified Omega Ingredient': { share: 0.1, growthMul: 1.11 },
 };
 
-const byDistributionRoot = {
-  'Public Healthcare Systems': {
-    share: 0.22,
-    children: {
-      'Government procurement': { share: 1, growthMul: 0.98 },
-    },
-  },
-  'Private Healthcare Providers': {
-    share: 0.35,
-    children: {
-      'Private hospitals': { share: 0.55, growthMul: 1.05 },
-      'Specialty rehab centers': { share: 0.45, growthMul: 1.08 },
-    },
-  },
-  'Direct-to-Consumer (D2C)': {
-    share: 0.18,
-    children: {
-      'At-home devices (non-invasive BCI)': { share: 1, growthMul: 1.15 },
-    },
-  },
-  'Research Grants / Institutional Funding': {
-    share: 0.25,
-    children: {
-      'Public funding bodies': { share: 0.55, growthMul: 1.04 },
-      'Innovation programs': { share: 0.45, growthMul: 1.12 },
-    },
-  },
+const byApplicationIndustryRoot = {
+  'Dietary Supplements & Nutraceuticals': { share: 0.34, growthMul: 1.05 },
+  'Functional Food & Beverages': { share: 0.26, growthMul: 1.07 },
+  'Pharmaceuticals & Clinical Nutrition': { share: 0.19, growthMul: 1.04 },
+  'Personal Care & Cosmetics': { share: 0.12, growthMul: 1.08 },
+  'Others (Aquafeed, etc.)': { share: 0.09, growthMul: 1.06 },
+};
+
+const byDistributionChannelRoot = {
+  Direct: { share: 0.43, growthMul: 1.05 },
+  'Indirect (via. Distributors)': { share: 0.57, growthMul: 1.04 },
 };
 
 let seed = 42;
@@ -190,9 +148,6 @@ function generateTimeSeries(baseValue, growthRate, roundFn) {
   return series;
 }
 
-/**
- * Build nested JSON: inner nodes are objects; leaves get year maps.
- */
 function materializeTree(spec, allocatedBase, countryGrowth, roundFn) {
   if (!spec.children) {
     const mul = spec.growthMul ?? 1;
@@ -224,15 +179,21 @@ function generateCountryData(isVolume) {
   const data = {};
 
   for (const geo of GEOGRAPHIES) {
-    const countryBase = laTotalBase2021 * countryShares[geo] * mult;
+    const countryBase = globalTotalBase2021 * countryShares[geo] * mult;
     const countryGrowth = regionGrowthRates[geo];
 
     data[geo] = {
-      'By BCI Modality': buildTopLevelTree(byBciModalityRoot, countryBase, countryGrowth, roundFn),
-      'By Application': buildTopLevelTree(byApplicationRoot, countryBase, countryGrowth, roundFn),
-      'By End User': materializeTree(byEndUserRoot, countryBase, countryGrowth, roundFn),
-      'By Distribution / Procurement Channel': buildTopLevelTree(
-        byDistributionRoot,
+      'By Product Type': buildTopLevelTree(byProductTypeRoot, countryBase, countryGrowth, roundFn),
+      'By Omega Type': buildTopLevelTree(byOmegaTypeRoot, countryBase, countryGrowth, roundFn),
+      'By Form': buildTopLevelTree(byFormRoot, countryBase, countryGrowth, roundFn),
+      'By Application Industry': buildTopLevelTree(
+        byApplicationIndustryRoot,
+        countryBase,
+        countryGrowth,
+        roundFn
+      ),
+      'By Distribution Channel': buildTopLevelTree(
+        byDistributionChannelRoot,
         countryBase,
         countryGrowth,
         roundFn
@@ -243,7 +204,6 @@ function generateCountryData(isVolume) {
   return data;
 }
 
-/** Strip numeric leaves to {} for segmentation_analysis.json */
 function toStructureOnly(node) {
   if (node === null || typeof node !== 'object' || Array.isArray(node)) {
     return {};
@@ -278,8 +238,8 @@ fs.writeFileSync(
 );
 
 console.log('Generated value.json, volume.json, segmentation_analysis.json');
-console.log('Geographies:', GEOGRAPHIES.join(', '));
+console.log('Country count:', GEOGRAPHIES.length);
 console.log(
   'Segment types:',
-  Object.keys(valueData.Brazil).join(', ')
+  Object.keys(valueData['U.S.']).join(', ')
 );

@@ -4,6 +4,7 @@
  */
 
 import type { ComparisonData, DataRecord, Metadata, GeographyDimension, SegmentDimension, SegmentHierarchy } from './types'
+import { buildGeographyDimensionForCountries } from './geography-hierarchy'
 import fs from 'fs/promises'
 import path from 'path'
 
@@ -1359,17 +1360,12 @@ export async function processJsonDataAsync(
       return geographiesWithData.has(g)
     })
 
-    // Build geography dimension with full hierarchy
-    const geographyDimension: GeographyDimension = {
-      global: filteredGeographies.filter(g => !regionGeographies.includes(g) && !allCountries.includes(g)),
-      regions: regionGeographies,
-      countries: regionToCountries,
-      all_geographies: filteredGeographies
-    }
+    // Build geography dimension: standard region → country tree when keys match spec (image 2)
+    const geographyDimension: GeographyDimension = buildGeographyDimensionForCountries(filteredGeographies)
 
     console.log(`Geography dimension built with ${geographies.length} geographies:`, geographies)
-    console.log(`Regions:`, regionGeographies)
-    console.log(`Countries by region:`, regionToCountries)
+    console.log(`Regions:`, geographyDimension.regions)
+    console.log(`Countries by region:`, geographyDimension.countries)
     
     // Process each segment type asynchronously
     const segments: Record<string, SegmentDimension> = {}
@@ -1472,9 +1468,9 @@ export async function processJsonDataAsync(
     
     // Build metadata
     const metadata: Metadata = {
-      market_name: 'Brain-Computer Interface (BCI)-Enabled Assistive Technologies Opportunity Market',
+      market_name: 'Vegan Omega Oil Ingredient Market',
       market_type: 'Market Analysis',
-      industry: 'Healthcare & Pharmaceuticals',
+      industry: 'Nutrition & Specialty Ingredients',
       years: allYears,
       start_year: startYear,
       base_year: baseYear,

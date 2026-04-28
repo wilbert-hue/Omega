@@ -12,9 +12,8 @@ import { ComparisonTable } from '@/components/charts/ComparisonTable'
 import { WaterfallChart } from '@/components/charts/WaterfallChart'
 import { D3BubbleChartIndependent } from '@/components/charts/D3BubbleChartIndependent'
 import { CompetitiveIntelligence } from '@/components/charts/CompetitiveIntelligence'
-import CustomerIntelligenceHeatmap from '@/components/charts/CustomerIntelligenceHeatmap'
-import DistributorsIntelligence from '@/components/charts/DistributorsIntelligenceTable'
-import CustomerIntelligenceDatabase from '@/components/charts/CustomerIntelligenceDatabase'
+import { VeganOmegaCustomerIntelligenceTable } from '@/components/charts/VeganOmegaCustomerIntelligenceTable'
+import { VeganOmegaDistributorIntelligenceTable } from '@/components/charts/VeganOmegaDistributorIntelligenceTable'
 import { InsightsPanel } from '@/components/InsightsPanel'
 import { FilterPresets } from '@/components/filters/FilterPresets'
 import { ChartGroupSelector } from '@/components/filters/ChartGroupSelector'
@@ -31,7 +30,17 @@ export default function DashboardPage() {
   const { setData, setLoading, setError, data, isLoading, error, filters, selectedChartGroup, dashboardName } = useDashboardStore()
   const [mounted, setMounted] = useState(false)
   const [hasCheckedStore, setHasCheckedStore] = useState(false)
-  const [activeTab, setActiveTab] = useState<'bar' | 'line' | 'heatmap' | 'table' | 'waterfall' | 'bubble' | 'competitive-intelligence' | 'customer-intelligence' | 'customer-intelligence-database'>('bar')
+  const [activeTab, setActiveTab] = useState<
+    | 'bar'
+    | 'line'
+    | 'heatmap'
+    | 'table'
+    | 'waterfall'
+    | 'bubble'
+    | 'competitive-intelligence'
+    | 'vegan-customer'
+    | 'vegan-distributor'
+  >('bar')
   const [showInsights, setShowInsights] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [viewMode, setViewMode] = useState<'tabs' | 'vertical'>('tabs')
@@ -54,8 +63,8 @@ export default function DashboardPage() {
     'waterfall': 'waterfall',
     'bubble': 'bubble',
     'competitive-intelligence': 'competitive-intelligence',
-    'customer-intelligence': 'customer-intelligence',
-    'customer-intelligence-database': 'customer-intelligence-database'
+    'vegan-customer-directory': 'vegan-customer',
+    'vegan-distributor-directory': 'vegan-distributor',
   }
 
   // Auto-switch to first available tab when chart group changes
@@ -204,7 +213,7 @@ export default function DashboardPage() {
                 Coherent Dashboard
               </h1>
               <h2 className="text-sm text-black">
-                {dashboardName || 'Latin America Brain-Computer Interface (BCI)-Enabled Assistive Technologies Opportunity Analysis Market'}
+                {dashboardName || 'Global Vegan Omega Oil Ingredient Market'}
               </h2>
             </div>
           </div>
@@ -380,28 +389,28 @@ export default function DashboardPage() {
                             🫧 Bubble Chart
                           </button>
                         )}
-                        {isChartVisible('customer-intelligence') && (
+                        {isChartVisible('vegan-customer-directory') && (
                           <button
-                            onClick={() => setActiveTab('customer-intelligence')}
+                            onClick={() => setActiveTab('vegan-customer')}
                             className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
-                              activeTab === 'customer-intelligence'
+                              activeTab === 'vegan-customer'
                                 ? 'border-blue-500 text-blue-600'
                                 : 'border-transparent text-black hover:text-black hover:border-gray-300'
                             }`}
                           >
-                            👥 Customer Intelligence
+                            Customer Intelligence
                           </button>
                         )}
-                        {isChartVisible('customer-intelligence-database') && (
+                        {isChartVisible('vegan-distributor-directory') && (
                           <button
-                            onClick={() => setActiveTab('customer-intelligence-database')}
+                            onClick={() => setActiveTab('vegan-distributor')}
                             className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
-                              activeTab === 'customer-intelligence-database'
+                              activeTab === 'vegan-distributor'
                                 ? 'border-blue-500 text-blue-600'
                                 : 'border-transparent text-black hover:text-black hover:border-gray-300'
                             }`}
                           >
-                            👤 Customer Intelligence
+                            Distributor Intelligence
                           </button>
                         )}
                       </>
@@ -494,29 +503,15 @@ export default function DashboardPage() {
                       </div>
                     )}
                     
-                    {activeTab === 'customer-intelligence' && (
-                      <div id="customer-intelligence-chart" className="space-y-8">
-                        <div>
-                          <CustomerIntelligenceHeatmap
-                            title="Customer Intelligence - Industry Category × Region"
-                            height={500}
-                          />
-                        </div>
-                        <div className="mt-8 pt-8 border-t border-gray-200">
-                          <DistributorsIntelligence
-                            title="Distributors Intelligence Database"
-                            height={500}
-                          />
-                        </div>
+                    {activeTab === 'vegan-customer' && (
+                      <div id="vegan-customer-intelligence">
+                        <VeganOmegaCustomerIntelligenceTable height={640} />
                       </div>
                     )}
 
-                    {activeTab === 'customer-intelligence-database' && (
-                      <div id="customer-intelligence-database-chart">
-                        <CustomerIntelligenceDatabase
-                          title="Customer Intelligence Database"
-                          height={600}
-                        />
+                    {activeTab === 'vegan-distributor' && (
+                      <div id="vegan-distributor-intelligence">
+                        <VeganOmegaDistributorIntelligenceTable height={640} />
                       </div>
                     )}
                   </>
@@ -590,32 +585,17 @@ export default function DashboardPage() {
                       </div>
                     )}
                     
-                    {isChartVisible('customer-intelligence') && (
-                      <div className="space-y-8">
-                        <div className="border-b pb-8">
-                          <h3 className="text-lg font-semibold text-black mb-4">👥 Customer Intelligence</h3>
-                          <CustomerIntelligenceHeatmap
-                            title="Customer Intelligence - Industry Category × Region"
-                            height={450}
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-black mb-4">📦 Distributors Intelligence Database</h3>
-                          <DistributorsIntelligence
-                            title="Distributors Intelligence Database"
-                            height={500}
-                          />
-                        </div>
+                    {isChartVisible('vegan-customer-directory') && (
+                      <div className="border-b pb-8">
+                        <h3 className="text-lg font-semibold text-black mb-4">Customer Intelligence</h3>
+                        <VeganOmegaCustomerIntelligenceTable height={600} />
                       </div>
                     )}
 
-                    {isChartVisible('customer-intelligence-database') && (
+                    {isChartVisible('vegan-distributor-directory') && (
                       <div className="border-b pb-8">
-                        <h3 className="text-lg font-semibold text-black mb-4">👤 Customer Intelligence Database</h3>
-                        <CustomerIntelligenceDatabase
-                          title="Customer Intelligence Database"
-                          height={600}
-                        />
+                        <h3 className="text-lg font-semibold text-black mb-4">Distributor Intelligence</h3>
+                        <VeganOmegaDistributorIntelligenceTable height={600} />
                       </div>
                     )}
                   </div>

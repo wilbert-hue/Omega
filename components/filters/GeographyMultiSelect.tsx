@@ -44,12 +44,32 @@ export function GeographyMultiSelect() {
     return { globalItems, regions, countries, hasHierarchy, flatOptions }
   }, [data])
 
-  // Filter items based on search
+  // Expand all regions by default so the hierarchy is visible without extra clicks
+  useEffect(() => {
+    if (regions.length > 0) {
+      setExpandedRegions(new Set(regions))
+    }
+  }, [regions])
+
+  // Filter items based on search (include region names, e.g. "North America")
   const searchResults = useMemo(() => {
     if (!searchTerm) return null
     const search = searchTerm.toLowerCase()
-    return flatOptions.filter(geo => geo.toLowerCase().includes(search))
-  }, [searchTerm, flatOptions])
+    const out: string[] = []
+    const seen = new Set<string>()
+    for (const r of regions) {
+      if (r.toLowerCase().includes(search)) {
+        out.push(r)
+        seen.add(r)
+      }
+    }
+    for (const geo of flatOptions) {
+      if (!seen.has(geo) && geo.toLowerCase().includes(search)) {
+        out.push(geo)
+      }
+    }
+    return out
+  }, [searchTerm, flatOptions, regions])
 
   const toggleRegionExpand = (region: string) => {
     setExpandedRegions(prev => {
@@ -110,33 +130,38 @@ export function GeographyMultiSelect() {
     const regionCountries = countries[region] || []
     const isExpanded = expandedRegions.has(region)
     const hasCountries = regionCountries.length > 0
+    const isSelected = filters.geographies.includes(region)
 
     return (
       <div key={region}>
-        <div className="flex items-center hover:bg-blue-50">
-          {hasCountries && (
+        <div
+          className="flex items-center py-1.5 hover:bg-blue-50"
+          style={{ paddingLeft: '4px', paddingRight: '12px' }}
+        >
+          {hasCountries ? (
             <button
+              type="button"
               onClick={(e) => { e.stopPropagation(); toggleRegionExpand(region) }}
-              className="p-1 ml-1 hover:bg-gray-200 rounded"
+              className="p-1 mr-0.5 hover:bg-gray-200 rounded flex-shrink-0"
+              aria-label={isExpanded ? `Collapse ${region}` : `Expand ${region}`}
             >
               {isExpanded
                 ? <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
                 : <ChevronRight className="h-3.5 w-3.5 text-gray-500" />
               }
             </button>
+          ) : (
+            <span className="w-7 flex-shrink-0 inline-block" aria-hidden />
           )}
-          <label
-            className="flex items-center py-1.5 cursor-pointer flex-1"
-            style={{ paddingLeft: hasCountries ? '2px' : '28px', paddingRight: '12px' }}
-          >
+          <label className="flex items-center flex-1 cursor-pointer min-w-0">
             <input
               type="checkbox"
-              checked={filters.geographies.includes(region)}
+              checked={isSelected}
               onChange={() => handleToggle(region)}
-              className="mr-2 h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+              className="mr-2 h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 flex-shrink-0"
             />
             <span className="text-sm text-black font-medium flex-1">{region}</span>
-            {filters.geographies.includes(region) && (
+            {isSelected && (
               <Check className="h-3.5 w-3.5 text-blue-600 flex-shrink-0" />
             )}
           </label>

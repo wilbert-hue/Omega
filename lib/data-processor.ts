@@ -2000,7 +2000,7 @@ export function prepareIntelligentMultiLevelData(
 
         if (leafRecords.length > 0) {
           // Geography (and other) modes: sum all leaf rows for this group — one geography
-          // can have many segment leaves after filtering (e.g. Quick Filters + BCI modality).
+          // can have many segment leaves after filtering (e.g. Quick Filters + active segment type).
           dataPoint[key] = leafRecords.reduce(
             (sum, r) => sum + (r.time_series[year] || 0),
             0

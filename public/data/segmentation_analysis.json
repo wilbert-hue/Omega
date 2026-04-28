@@ -1,318 +1,1010 @@
 {
+  "U.S.": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Canada": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "U.K.": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Germany": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Italy": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "France": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Netherland": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Spain": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Belgium": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Russia": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Rest of Europe": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "China": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "India": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Japan": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "South Korea": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Singapore": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Thailand": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Indonesia": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Australia": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
+  "Rest of Asia Pacific": {
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
+    },
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
+    },
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
+    },
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
+    }
+  },
   "Brazil": {
-    "By BCI Modality": {
-      "Non-Invasive BCI": {
-        "EEG-based BCI": {
-          "Motor imagery (MI)": {},
-          "P300-based systems": {},
-          "SSVEP (Steady-State Visual Evoked Potential)": {}
-        },
-        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
-        "fNIRS-based BCI (emerging, low penetration)": {}
-      },
-      "Minimally Invasive BCI": {},
-      "Fully Invasive BCI": {
-        "Implanted cortical electrodes": {},
-        "Intracortical arrays": {},
-        "ECoG-based systems": {}
-      }
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
     },
-    "By Application": {
-      "Communication Restoration": {},
-      "Environmental & Device Control": {},
-      "Mobility & Motor Assistance": {},
-      "Rehabilitation & Neuro-recovery": {}
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
     },
-    "By End User": {
-      "Clinical Condition": {
-        "Neurodegenerative Disorders": {
-          "ALS (primary target segment)": {},
-          "Multiple sclerosis (advanced stage)": {}
-        },
-        "Stroke Survivors": {
-          "Ischemic stroke (severe disability)": {},
-          "Hemorrhagic stroke": {}
-        },
-        "Spinal Cord Injury (SCI)": {
-          "Tetraplegia (high priority)": {},
-          "Paraplegia": {}
-        },
-        "Cerebral Palsy (Severe Motor Impairment)": {
-          "Non-verbal CP patients": {}
-        },
-        "Other Severe Motor Impairments": {
-          "Locked-in syndrome": {},
-          "Traumatic brain injury (TBI)": {}
-        }
-      },
-      "End-User Setting": {
-        "Institutional Healthcare": {
-          "Rehabilitation hospitals": {},
-          "Neurology clinics": {},
-          "Long-term care centers": {}
-        },
-        "Home Care Settings": {
-          "Direct-to-patient deployment": {},
-          "Caregiver-assisted usage": {}
-        },
-        "Research & Clinical Trials": {
-          "Universities": {},
-          "Neuroscience labs": {}
-        }
-      }
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
     },
-    "By Distribution / Procurement Channel": {
-      "Public Healthcare Systems": {
-        "Government procurement": {}
-      },
-      "Private Healthcare Providers": {
-        "Private hospitals": {},
-        "Specialty rehab centers": {}
-      },
-      "Direct-to-Consumer (D2C)": {
-        "At-home devices (non-invasive BCI)": {}
-      },
-      "Research Grants / Institutional Funding": {
-        "Public funding bodies": {},
-        "Innovation programs": {}
-      }
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
     }
   },
   "Argentina": {
-    "By BCI Modality": {
-      "Non-Invasive BCI": {
-        "EEG-based BCI": {
-          "Motor imagery (MI)": {},
-          "P300-based systems": {},
-          "SSVEP (Steady-State Visual Evoked Potential)": {}
-        },
-        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
-        "fNIRS-based BCI (emerging, low penetration)": {}
-      },
-      "Minimally Invasive BCI": {},
-      "Fully Invasive BCI": {
-        "Implanted cortical electrodes": {},
-        "Intracortical arrays": {},
-        "ECoG-based systems": {}
-      }
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
     },
-    "By Application": {
-      "Communication Restoration": {},
-      "Environmental & Device Control": {},
-      "Mobility & Motor Assistance": {},
-      "Rehabilitation & Neuro-recovery": {}
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
     },
-    "By End User": {
-      "Clinical Condition": {
-        "Neurodegenerative Disorders": {
-          "ALS (primary target segment)": {},
-          "Multiple sclerosis (advanced stage)": {}
-        },
-        "Stroke Survivors": {
-          "Ischemic stroke (severe disability)": {},
-          "Hemorrhagic stroke": {}
-        },
-        "Spinal Cord Injury (SCI)": {
-          "Tetraplegia (high priority)": {},
-          "Paraplegia": {}
-        },
-        "Cerebral Palsy (Severe Motor Impairment)": {
-          "Non-verbal CP patients": {}
-        },
-        "Other Severe Motor Impairments": {
-          "Locked-in syndrome": {},
-          "Traumatic brain injury (TBI)": {}
-        }
-      },
-      "End-User Setting": {
-        "Institutional Healthcare": {
-          "Rehabilitation hospitals": {},
-          "Neurology clinics": {},
-          "Long-term care centers": {}
-        },
-        "Home Care Settings": {
-          "Direct-to-patient deployment": {},
-          "Caregiver-assisted usage": {}
-        },
-        "Research & Clinical Trials": {
-          "Universities": {},
-          "Neuroscience labs": {}
-        }
-      }
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
     },
-    "By Distribution / Procurement Channel": {
-      "Public Healthcare Systems": {
-        "Government procurement": {}
-      },
-      "Private Healthcare Providers": {
-        "Private hospitals": {},
-        "Specialty rehab centers": {}
-      },
-      "Direct-to-Consumer (D2C)": {
-        "At-home devices (non-invasive BCI)": {}
-      },
-      "Research Grants / Institutional Funding": {
-        "Public funding bodies": {},
-        "Innovation programs": {}
-      }
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
     }
   },
   "Mexico": {
-    "By BCI Modality": {
-      "Non-Invasive BCI": {
-        "EEG-based BCI": {
-          "Motor imagery (MI)": {},
-          "P300-based systems": {},
-          "SSVEP (Steady-State Visual Evoked Potential)": {}
-        },
-        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
-        "fNIRS-based BCI (emerging, low penetration)": {}
-      },
-      "Minimally Invasive BCI": {},
-      "Fully Invasive BCI": {
-        "Implanted cortical electrodes": {},
-        "Intracortical arrays": {},
-        "ECoG-based systems": {}
-      }
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
     },
-    "By Application": {
-      "Communication Restoration": {},
-      "Environmental & Device Control": {},
-      "Mobility & Motor Assistance": {},
-      "Rehabilitation & Neuro-recovery": {}
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
     },
-    "By End User": {
-      "Clinical Condition": {
-        "Neurodegenerative Disorders": {
-          "ALS (primary target segment)": {},
-          "Multiple sclerosis (advanced stage)": {}
-        },
-        "Stroke Survivors": {
-          "Ischemic stroke (severe disability)": {},
-          "Hemorrhagic stroke": {}
-        },
-        "Spinal Cord Injury (SCI)": {
-          "Tetraplegia (high priority)": {},
-          "Paraplegia": {}
-        },
-        "Cerebral Palsy (Severe Motor Impairment)": {
-          "Non-verbal CP patients": {}
-        },
-        "Other Severe Motor Impairments": {
-          "Locked-in syndrome": {},
-          "Traumatic brain injury (TBI)": {}
-        }
-      },
-      "End-User Setting": {
-        "Institutional Healthcare": {
-          "Rehabilitation hospitals": {},
-          "Neurology clinics": {},
-          "Long-term care centers": {}
-        },
-        "Home Care Settings": {
-          "Direct-to-patient deployment": {},
-          "Caregiver-assisted usage": {}
-        },
-        "Research & Clinical Trials": {
-          "Universities": {},
-          "Neuroscience labs": {}
-        }
-      }
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
     },
-    "By Distribution / Procurement Channel": {
-      "Public Healthcare Systems": {
-        "Government procurement": {}
-      },
-      "Private Healthcare Providers": {
-        "Private hospitals": {},
-        "Specialty rehab centers": {}
-      },
-      "Direct-to-Consumer (D2C)": {
-        "At-home devices (non-invasive BCI)": {}
-      },
-      "Research Grants / Institutional Funding": {
-        "Public funding bodies": {},
-        "Innovation programs": {}
-      }
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
     }
   },
   "Rest of Latin America": {
-    "By BCI Modality": {
-      "Non-Invasive BCI": {
-        "EEG-based BCI": {
-          "Motor imagery (MI)": {},
-          "P300-based systems": {},
-          "SSVEP (Steady-State Visual Evoked Potential)": {}
-        },
-        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
-        "fNIRS-based BCI (emerging, low penetration)": {}
-      },
-      "Minimally Invasive BCI": {},
-      "Fully Invasive BCI": {
-        "Implanted cortical electrodes": {},
-        "Intracortical arrays": {},
-        "ECoG-based systems": {}
-      }
+    "By Product Type": {
+      "Algal DHA Oil": {},
+      "Algal EPA Oil": {},
+      "Blended Omega Oils": {},
+      "Flaxseed Oil": {},
+      "Chia Seed Oil": {},
+      "Hemp Seed Oil": {},
+      "Perilla Oil": {},
+      "Ahiflower Oil": {}
     },
-    "By Application": {
-      "Communication Restoration": {},
-      "Environmental & Device Control": {},
-      "Mobility & Motor Assistance": {},
-      "Rehabilitation & Neuro-recovery": {}
+    "By Omega Type": {
+      "Omega-3": {
+        "ALA": {},
+        "DHA": {},
+        "EPA": {},
+        "DHA + EPA": {}
+      },
+      "Omega-6": {},
+      "Omega-9": {},
+      "Omega 3-6-9 Blends": {}
     },
-    "By End User": {
-      "Clinical Condition": {
-        "Neurodegenerative Disorders": {
-          "ALS (primary target segment)": {},
-          "Multiple sclerosis (advanced stage)": {}
-        },
-        "Stroke Survivors": {
-          "Ischemic stroke (severe disability)": {},
-          "Hemorrhagic stroke": {}
-        },
-        "Spinal Cord Injury (SCI)": {
-          "Tetraplegia (high priority)": {},
-          "Paraplegia": {}
-        },
-        "Cerebral Palsy (Severe Motor Impairment)": {
-          "Non-verbal CP patients": {}
-        },
-        "Other Severe Motor Impairments": {
-          "Locked-in syndrome": {},
-          "Traumatic brain injury (TBI)": {}
-        }
-      },
-      "End-User Setting": {
-        "Institutional Healthcare": {
-          "Rehabilitation hospitals": {},
-          "Neurology clinics": {},
-          "Long-term care centers": {}
-        },
-        "Home Care Settings": {
-          "Direct-to-patient deployment": {},
-          "Caregiver-assisted usage": {}
-        },
-        "Research & Clinical Trials": {
-          "Universities": {},
-          "Neuroscience labs": {}
-        }
-      }
+    "By Form": {
+      "Crude Oil": {},
+      "Refined Oil": {},
+      "Concentrated Oil": {},
+      "Powdered Omega Ingredient": {},
+      "Encapsulated Oil": {},
+      "Emulsified Omega Ingredient": {}
     },
-    "By Distribution / Procurement Channel": {
-      "Public Healthcare Systems": {
-        "Government procurement": {}
-      },
-      "Private Healthcare Providers": {
-        "Private hospitals": {},
-        "Specialty rehab centers": {}
-      },
-      "Direct-to-Consumer (D2C)": {
-        "At-home devices (non-invasive BCI)": {}
-      },
-      "Research Grants / Institutional Funding": {
-        "Public funding bodies": {},
-        "Innovation programs": {}
-      }
+    "By Application Industry": {
+      "Dietary Supplements & Nutraceuticals": {},
+      "Functional Food & Beverages": {},
+      "Pharmaceuticals & Clinical Nutrition": {},
+      "Personal Care & Cosmetics": {},
+      "Others (Aquafeed, etc.)": {}
+    },
+    "By Distribution Channel": {
+      "Direct": {},
+      "Indirect (via. Distributors)": {}
     }
   }
 }

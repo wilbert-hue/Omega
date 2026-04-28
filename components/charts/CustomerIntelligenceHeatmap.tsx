@@ -182,10 +182,9 @@ export function CustomerIntelligenceHeatmap({ title, height = 600, filePath }: C
     // Default regions and segments if data is not available
     const defaultRegions = [
       'North America',
-      'Latin America',
       'Europe',
       'Asia Pacific',
-      'Middle East & Africa'
+      'Latin America',
     ]
     
     const defaultSegments = [
