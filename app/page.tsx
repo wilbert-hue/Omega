@@ -204,7 +204,7 @@ export default function DashboardPage() {
                 Coherent Dashboard
               </h1>
               <h2 className="text-sm text-black">
-                {dashboardName || 'Global Normothermic Machine Perfusion Market'}
+                {dashboardName || 'Latin America Brain-Computer Interface (BCI)-Enabled Assistive Technologies Opportunity Analysis Market'}
               </h2>
             </div>
           </div>
@@ -216,6 +216,12 @@ export default function DashboardPage() {
           <GlobalKPICards />
         </div>
 
+        <p
+          className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs text-amber-900"
+          role="note"
+        >
+          NOTE: All the data in the dashboard is demo data. No real-world data is related to this.
+        </p>
 
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar - Enhanced Filter Panel */}

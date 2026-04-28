@@ -140,6 +140,27 @@ export function determineAggregationLevel(
 }
 
 /**
+ * Segment names selected for the active `segmentType` (advanced UI vs Quick Filters `segments` only).
+ */
+export function getSelectedSegmentNamesForType(
+  filters: FilterState & { advancedSegments?: any[] }
+): string[] {
+  const fromAdvanced = (filters.advancedSegments || [])
+    .filter((s: any) => s.type === filters.segmentType)
+    .map((s: any) => s.segment)
+  return fromAdvanced.length > 0 ? fromAdvanced : [...(filters.segments || [])]
+}
+
+/**
+ * Whether filters narrow segments for the active segment type.
+ */
+export function hasSegmentSelectionForCurrentType(
+  filters: FilterState & { advancedSegments?: any[] }
+): boolean {
+  return getSelectedSegmentNamesForType(filters).length > 0
+}
+
+/**
  * Filter data records based on current filter state
  * Now with automatic aggregation level detection
  */
@@ -397,24 +418,36 @@ export function filterData(
               }
             }
           } else {
-            // Check if this leaf's parent is one of the explicitly selected segments
-            // If so, the aggregated parent record is already included - skip the leaf to avoid double-counting
+            // Check if this leaf's level-1 parent is one of the explicitly selected segments.
+            // Only skip the leaf when a real aggregated parent row exists in the dataset for that
+            // geography + segment. Many JSON sources only store values at leaves (no parent totals);
+            // in that case we must keep leaves so parent selections still show data.
             const hierarchy = record.segment_hierarchy
-            const parentIsSelected = selectedLevel1Segments.some(selectedSeg =>
-              hierarchy.level_1 === selectedSeg
+            const matchingSelectedParent = selectedLevel1Segments.find(
+              (selectedSeg) => hierarchy.level_1 === selectedSeg
             )
+            const parentIsSelected = matchingSelectedParent !== undefined
 
             if (parentIsSelected && !isExplicitlySelectedSegment) {
-              // Parent aggregated record is already included - exclude this leaf child
-              // BUT if this leaf IS the explicitly selected segment (flat segment with no children),
-              // include it because there's no separate aggregated parent record for flat segments
-              return false
+              const parentAggExists = data.some(
+                (r) =>
+                  r.segment_type === filters.segmentType &&
+                  r.geography === record.geography &&
+                  r.segment === matchingSelectedParent &&
+                  r.is_aggregated === true
+              )
+              if (parentAggExists) {
+                return false
+              }
             }
 
             // For other cases, check if this leaf belongs to any selected segment
             const belongsToSelectedSegment = selectedLevel1Segments.some(selectedSeg =>
               hierarchy.level_1 === selectedSeg ||
               hierarchy.level_2 === selectedSeg ||
+              hierarchy.level_3 === selectedSeg ||
+              hierarchy.level_4 === selectedSeg ||
+              (hierarchy.level_5 && hierarchy.level_5 === selectedSeg) ||
               record.segment === selectedSeg
             )
 
@@ -706,34 +739,12 @@ export function prepareGroupedBarData(
   const { yearRange, viewMode, geographies, segments, aggregationLevel } = filters
   const [startYear, endYear] = yearRange
 
-  // Get selected segments for aggregation
-  const advancedSegments = filters.advancedSegments || []
-  const selectedSegmentNames = advancedSegments
-    .filter((seg: any) => seg.type === filters.segmentType)
-    .map((seg: any) => seg.segment)
-
-  // Determine effective aggregation level (same logic as filterData)
-  // This ensures chart data preparation uses the same level detection
+  const selectedSegmentNames = getSelectedSegmentNamesForType(filters)
   let effectiveAggregationLevel = aggregationLevel
-
-  // IMPORTANT: When user has EXPLICITLY selected segments (via Add Segment button),
-  // we should NOT apply automatic Level 2 aggregation - we want to show the sub-segments individually
   const hasUserSelectedSegments = selectedSegmentNames.length > 0
 
   if (effectiveAggregationLevel === null || effectiveAggregationLevel === undefined) {
-    const segmentsFromSameType = advancedSegments.filter(
-      (seg: any) => seg.type === filters.segmentType
-    )
-    const hasSegmentsForCurrentType = segmentsFromSameType.length > 0
-
-    if (!hasSegmentsForCurrentType) {
-      // No segments selected for this segment type - default to Level 2 (show parent segments)
-      effectiveAggregationLevel = 2
-    } else {
-      // User selected specific segments - don't force Level 2 aggregation
-      // This allows showing sub-segments when a parent is selected
-      effectiveAggregationLevel = null
-    }
+    effectiveAggregationLevel = hasUserSelectedSegments ? null : 2
   }
 
   // Generate year range
@@ -1142,32 +1153,11 @@ export function prepareLineChartData(
   const { yearRange, viewMode, aggregationLevel } = filters
   const [startYear, endYear] = yearRange
 
-  // Get selected segments for aggregation
-  const advancedSegments = filters.advancedSegments || []
-  const selectedSegmentNames = advancedSegments
-    .filter((seg: any) => seg.type === filters.segmentType)
-    .map((seg: any) => seg.segment)
-
-  // IMPORTANT: When user has EXPLICITLY selected segments (via Add Segment button),
-  // we should NOT apply automatic Level 2 aggregation - we want to show the sub-segments individually
+  const selectedSegmentNames = getSelectedSegmentNamesForType(filters)
   const hasUserSelectedSegments = selectedSegmentNames.length > 0
-
-  // Determine effective aggregation level (same logic as filterData and prepareGroupedBarData)
   let effectiveAggregationLevel = aggregationLevel
   if (effectiveAggregationLevel === null || effectiveAggregationLevel === undefined) {
-    const segmentsFromSameType = advancedSegments.filter(
-      (seg: any) => seg.type === filters.segmentType
-    )
-    const hasSegmentsForCurrentType = segmentsFromSameType.length > 0
-
-    if (!hasSegmentsForCurrentType) {
-      // No segments selected for this segment type - default to Level 2 (show parent segments)
-      effectiveAggregationLevel = 2
-    } else {
-      // User selected specific segments - don't force Level 2 aggregation
-      // This allows showing sub-segments when a parent is selected
-      effectiveAggregationLevel = null
-    }
+    effectiveAggregationLevel = hasUserSelectedSegments ? null : 2
   }
 
   // Only apply Level 2 aggregation when user hasn't explicitly selected segments
@@ -1220,11 +1210,15 @@ export function prepareLineChartData(
         if (hasExplicitLevel1Selection) {
           // Check if this record matches one of the selected segments
           const matchedSegment = selectedSegmentNames.find(seg => {
-            // Direct match
             if (record.segment === seg) return true
-            // Hierarchy match - if this is a child record of a selected segment
             const hierarchy = record.segment_hierarchy
-            return hierarchy.level_1 === seg || hierarchy.level_2 === seg
+            return (
+              hierarchy.level_1 === seg ||
+              hierarchy.level_2 === seg ||
+              hierarchy.level_3 === seg ||
+              hierarchy.level_4 === seg ||
+              (hierarchy.level_5 && hierarchy.level_5 === seg)
+            )
           })
 
           if (matchedSegment) {
@@ -1365,30 +1359,11 @@ export function prepareTableData(
   const { yearRange, viewMode, aggregationLevel } = filters
   const [startYear, endYear] = yearRange
 
-  // Get selected segments
-  const advancedSegments = filters.advancedSegments || []
-  const selectedSegmentNames = advancedSegments
-    .filter((seg: any) => seg.type === filters.segmentType)
-    .map((seg: any) => seg.segment)
-
-  // IMPORTANT: When user has EXPLICITLY selected segments (via Add Segment button),
-  // we should NOT apply automatic Level 2 aggregation - we want to show the sub-segments individually
+  const selectedSegmentNames = getSelectedSegmentNamesForType(filters)
   const hasUserSelectedSegments = selectedSegmentNames.length > 0
-
-  // Determine effective aggregation level
   let effectiveAggregationLevel = aggregationLevel
   if (effectiveAggregationLevel === null || effectiveAggregationLevel === undefined) {
-    const segmentsFromSameType = advancedSegments.filter(
-      (seg: any) => seg.type === filters.segmentType
-    )
-    const hasSegmentsForCurrentType = segmentsFromSameType.length > 0
-
-    if (!hasSegmentsForCurrentType) {
-      effectiveAggregationLevel = 2
-    } else {
-      // User selected specific segments - don't force Level 2 aggregation
-      effectiveAggregationLevel = null
-    }
+    effectiveAggregationLevel = hasUserSelectedSegments ? null : 2
   }
 
   // Only apply Level 2 aggregation when user hasn't explicitly selected segments
@@ -1561,30 +1536,11 @@ export function prepareWaterfallData(
 ): Array<{ name: string; value: number; type: 'start' | 'positive' | 'negative' | 'end' }> {
   const [startYear, endYear] = filters.yearRange
 
-  // Get selected segments
-  const advancedSegments = filters.advancedSegments || []
-  const selectedSegmentNames = advancedSegments
-    .filter((seg: any) => seg.type === filters.segmentType)
-    .map((seg: any) => seg.segment)
-
-  // IMPORTANT: When user has EXPLICITLY selected segments (via Add Segment button),
-  // we should NOT apply automatic Level 2 aggregation - we want to show the sub-segments individually
+  const selectedSegmentNames = getSelectedSegmentNamesForType(filters)
   const hasUserSelectedSegments = selectedSegmentNames.length > 0
-
-  // Determine effective aggregation level
   let effectiveAggregationLevel = filters.aggregationLevel
   if (effectiveAggregationLevel === null || effectiveAggregationLevel === undefined) {
-    const segmentsFromSameType = advancedSegments.filter(
-      (seg: any) => seg.type === filters.segmentType
-    )
-    const hasSegmentsForCurrentType = segmentsFromSameType.length > 0
-
-    if (!hasSegmentsForCurrentType) {
-      effectiveAggregationLevel = 2
-    } else {
-      // User selected specific segments - don't force Level 2 aggregation
-      effectiveAggregationLevel = null
-    }
+    effectiveAggregationLevel = hasUserSelectedSegments ? null : 2
   }
 
   // Only apply Level 2 aggregation when user hasn't explicitly selected segments
@@ -1784,11 +1740,7 @@ export function prepareIntelligentMultiLevelData(
     years.push(year)
   }
 
-  // Get explicitly selected segments from advancedSegments
-  const advancedSegments = (filters as any).advancedSegments || []
-  const selectedLevel1Segments = advancedSegments
-    .filter((seg: any) => seg.type === filters.segmentType)
-    .map((seg: any) => seg.segment)
+  const selectedLevel1Segments = getSelectedSegmentNamesForType(filters)
 
   // DEBUG: Log what records we received
   console.log('📊 prepareIntelligentMultiLevelData received:', {
@@ -1879,11 +1831,15 @@ export function prepareIntelligentMultiLevelData(
       if (hasExplicitLevel1Selection) {
         // Check if this record matches one of the selected segments
         const matchedSegment = selectedLevel1Segments.find((seg: string) => {
-          // Direct match
           if (record.segment === seg) return true
-          // Hierarchy match - if this is a child record of a selected segment
           const hierarchy = record.segment_hierarchy
-          return hierarchy.level_1 === seg || hierarchy.level_2 === seg
+          return (
+            hierarchy.level_1 === seg ||
+            hierarchy.level_2 === seg ||
+            hierarchy.level_3 === seg ||
+            hierarchy.level_4 === seg ||
+            (hierarchy.level_5 && hierarchy.level_5 === seg)
+          )
         })
 
         if (matchedSegment) {
@@ -1917,7 +1873,29 @@ export function prepareIntelligentMultiLevelData(
             break
           }
         }
-        key = mappedGeo
+        // Stacked grouped bars use dataKey `geo::segment` (see GroupedBarChart). When multiple
+        // segments are selected (e.g. Quick Filters), group by that composite key — not geo alone.
+        const useGeoSegmentStacks =
+          hasExplicitLevel1Selection && selectedLevel1Segments.length > 1
+        if (useGeoSegmentStacks) {
+          const matchedSegment = selectedLevel1Segments.find((seg: string) => {
+            if (record.segment === seg) return true
+            const hierarchy = record.segment_hierarchy
+            return (
+              hierarchy.level_1 === seg ||
+              hierarchy.level_2 === seg ||
+              hierarchy.level_3 === seg ||
+              hierarchy.level_4 === seg ||
+              (hierarchy.level_5 && hierarchy.level_5 === seg)
+            )
+          })
+          if (!matchedSegment) {
+            return
+          }
+          key = `${mappedGeo}::${matchedSegment}`
+        } else {
+          key = mappedGeo
+        }
       }
     } else {
       key = record.geography
@@ -2018,11 +1996,15 @@ export function prepareIntelligentMultiLevelData(
         )
       } else {
         // Standard logic for non-Level 1 selections
-        const leafRecord = groupRecords.find(r => !r.is_aggregated)
+        const leafRecords = groupRecords.filter(r => !r.is_aggregated)
 
-        if (leafRecord) {
-          // Use leaf record - most granular and accurate
-          dataPoint[key] = leafRecord.time_series[year] || 0
+        if (leafRecords.length > 0) {
+          // Geography (and other) modes: sum all leaf rows for this group — one geography
+          // can have many segment leaves after filtering (e.g. Quick Filters + BCI modality).
+          dataPoint[key] = leafRecords.reduce(
+            (sum, r) => sum + (r.time_series[year] || 0),
+            0
+          )
         } else {
           // No leaf record - find best aggregated record
           // If segments are selected, prefer aggregated records that match

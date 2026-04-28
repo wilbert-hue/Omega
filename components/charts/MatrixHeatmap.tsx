@@ -102,9 +102,19 @@ export function MatrixHeatmap({ title, height = 600 }: MatrixHeatmapProps) {
             value = globalValue * normalizedShare
           }
         } else {
-          // Direct lookup for non-Global data
-          const record = filtered.find(r => r.geography === geoYear.geography && r.segment === seg)
-          value = record?.time_series[geoYear.year] || 0
+          const matching = filtered.filter((r) => {
+            if (r.geography !== geoYear.geography) return false
+            if (r.segment === seg) return true
+            const h = r.segment_hierarchy
+            return (
+              h?.level_1 === seg ||
+              h?.level_2 === seg ||
+              h?.level_3 === seg ||
+              h?.level_4 === seg ||
+              (h?.level_5 && h.level_5 === seg)
+            )
+          })
+          value = matching.reduce((s, r) => s + (r.time_series[geoYear.year] || 0), 0)
         }
 
         matrix[rowIndex][segIndex] = value

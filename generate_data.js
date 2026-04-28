@@ -1,106 +1,167 @@
 const fs = require('fs');
 const path = require('path');
 
-// Years: 2021-2033
 const years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
 
-// Geographies with their region grouping
-const regions = {
-  "North America": ["U.S.", "Canada"],
-  "Europe": ["U.K.", "Germany", "Italy", "France", "Spain", "Russia", "Rest of Europe"],
-  "Asia Pacific": ["China", "India", "Japan", "South Korea", "ASEAN", "Australia", "Rest of Asia Pacific"],
-  "Latin America": ["Brazil", "Argentina", "Mexico", "Rest of Latin America"],
-  "Middle East & Africa": ["GCC", "South Africa", "Rest of Middle East & Africa"]
-};
+/** Latin America markets only (per dashboard geography spec) */
+const GEOGRAPHIES = ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'];
 
-// New segment definitions with market share splits (proportions within each segment type)
-const segmentTypes = {
-  "By Type": {
-    "Sub-Normothermic Perfusion (20–34°C)": 0.55,
-    "Warm or Normothermic Perfusion (35–37°C)": 0.45
-  },
-  "By Organ Type": {
-    "Liver": 0.35,
-    "Heart": 0.22,
-    "Lung": 0.18,
-    "Kidney": 0.15,
-    "Others (Pancreas, Small bowel / Intestine, Composite Tissues / Limb Perfusion (emerging use cases))": 0.10
-  },
-  "Application / Use Case": {
-    "Organ Preservation": 0.30,
-    "Viability Assessment": 0.25,
-    "Physiologic Transport": 0.20,
-    "Reconditioning Marginal Organs": 0.15,
-    "Others (Research Use / Protocol development)": 0.10
-  },
-  "By End User": {
-    "Hospitals & Clinics": 0.40,
-    "Specialty Clinic/Centers": 0.25,
-    "Transplant Centers": 0.25,
-    "Others (Research Institutes/Centers, Organ Procurement Organizations, etc.)": 0.10
-  }
-};
-
-// Regional base values (USD Million) for 2021 - total market per region
-// Global Normothermic Machine Perfusion market ~$300M in 2021, growing ~12% CAGR
-const regionBaseValues = {
-  "North America": 120,
-  "Europe": 90,
-  "Asia Pacific": 50,
-  "Latin America": 20,
-  "Middle East & Africa": 15
-};
-
-// Country share within region (must sum to ~1.0)
 const countryShares = {
-  "North America": { "U.S.": 0.82, "Canada": 0.18 },
-  "Europe": { "U.K.": 0.18, "Germany": 0.22, "Italy": 0.12, "France": 0.16, "Spain": 0.10, "Russia": 0.08, "Rest of Europe": 0.14 },
-  "Asia Pacific": { "China": 0.28, "India": 0.12, "Japan": 0.25, "South Korea": 0.12, "ASEAN": 0.10, "Australia": 0.07, "Rest of Asia Pacific": 0.06 },
-  "Latin America": { "Brazil": 0.45, "Argentina": 0.15, "Mexico": 0.25, "Rest of Latin America": 0.15 },
-  "Middle East & Africa": { "GCC": 0.45, "South Africa": 0.25, "Rest of Middle East & Africa": 0.30 }
+  Brazil: 0.45,
+  Argentina: 0.15,
+  Mexico: 0.25,
+  'Rest of Latin America': 0.15,
 };
 
-// Growth rates (CAGR) per region - slightly different for variety
+/** Total regional market (USD million), 2021 — split across the four countries */
+const laTotalBase2021 = 32;
+
 const regionGrowthRates = {
-  "North America": 0.115,
-  "Europe": 0.108,
-  "Asia Pacific": 0.145,
-  "Latin America": 0.125,
-  "Middle East & Africa": 0.118
+  Brazil: 0.138,
+  Argentina: 0.118,
+  Mexico: 0.128,
+  'Rest of Latin America': 0.125,
 };
 
-// Segment-specific growth multipliers (relative to regional base CAGR)
-const segmentGrowthMultipliers = {
-  "By Type": {
-    "Sub-Normothermic Perfusion (20–34°C)": 0.95,
-    "Warm or Normothermic Perfusion (35–37°C)": 1.07
+const volumePerMillionUSD = 520;
+
+/* --- Segment tree specs: share = fraction of parent; leaves also have growthMul --- */
+
+const byBciModalityRoot = {
+  'Non-Invasive BCI': {
+    share: 0.68,
+    children: {
+      'EEG-based BCI': {
+        share: 0.58,
+        children: {
+          'Motor imagery (MI)': { share: 0.34, growthMul: 1.02 },
+          'P300-based systems': { share: 0.33, growthMul: 1.05 },
+          'SSVEP (Steady-State Visual Evoked Potential)': { share: 0.33, growthMul: 1.03 },
+        },
+      },
+      'Hybrid BCI systems (EEG + eye tracking / EMG)': { share: 0.22, growthMul: 1.12 },
+      'fNIRS-based BCI (emerging, low penetration)': { share: 0.2, growthMul: 1.18 },
+    },
   },
-  "By Organ Type": {
-    "Liver": 1.08,
-    "Heart": 1.05,
-    "Lung": 1.12,
-    "Kidney": 0.95,
-    "Others (Pancreas, Small bowel / Intestine, Composite Tissues / Limb Perfusion (emerging use cases))": 1.20
+  'Minimally Invasive BCI': { share: 0.07, growthMul: 1.15 },
+  'Fully Invasive BCI': {
+    share: 0.25,
+    children: {
+      'Implanted cortical electrodes': { share: 0.35, growthMul: 1.08 },
+      'Intracortical arrays': { share: 0.4, growthMul: 1.1 },
+      'ECoG-based systems': { share: 0.25, growthMul: 1.06 },
+    },
   },
-  "Application / Use Case": {
-    "Organ Preservation": 0.92,
-    "Viability Assessment": 1.15,
-    "Physiologic Transport": 1.05,
-    "Reconditioning Marginal Organs": 1.18,
-    "Others (Research Use / Protocol development)": 1.10
-  },
-  "By End User": {
-    "Hospitals & Clinics": 0.98,
-    "Specialty Clinic/Centers": 1.10,
-    "Transplant Centers": 1.08,
-    "Others (Research Institutes/Centers, Organ Procurement Organizations, etc.)": 1.05
-  }
 };
 
-// Volume multiplier: units per USD Million (rough: ~500 units per $1M for perfusion devices)
-const volumePerMillionUSD = 480;
+const byApplicationRoot = {
+  'Communication Restoration': { share: 0.28, growthMul: 1.04 },
+  'Environmental & Device Control': { share: 0.26, growthMul: 1.06 },
+  'Mobility & Motor Assistance': { share: 0.26, growthMul: 1.08 },
+  'Rehabilitation & Neuro-recovery': { share: 0.2, growthMul: 1.1 },
+};
 
-// Seeded pseudo-random for reproducibility
+const byEndUserRoot = {
+  share: 1,
+  children: {
+    'Clinical Condition': {
+      share: 0.55,
+      children: {
+        'Neurodegenerative Disorders': {
+          share: 0.22,
+          children: {
+            'ALS (primary target segment)': { share: 0.62, growthMul: 1.08 },
+            'Multiple sclerosis (advanced stage)': { share: 0.38, growthMul: 1.04 },
+          },
+        },
+        'Stroke Survivors': {
+          share: 0.2,
+          children: {
+            'Ischemic stroke (severe disability)': { share: 0.55, growthMul: 1.03 },
+            'Hemorrhagic stroke': { share: 0.45, growthMul: 1.02 },
+          },
+        },
+        'Spinal Cord Injury (SCI)': {
+          share: 0.18,
+          children: {
+            'Tetraplegia (high priority)': { share: 0.55, growthMul: 1.1 },
+            Paraplegia: { share: 0.45, growthMul: 1.05 },
+          },
+        },
+        'Cerebral Palsy (Severe Motor Impairment)': {
+          share: 0.12,
+          children: {
+            'Non-verbal CP patients': { share: 1, growthMul: 1.06 },
+          },
+        },
+        'Other Severe Motor Impairments': {
+          share: 0.28,
+          children: {
+            'Locked-in syndrome': { share: 0.35, growthMul: 1.12 },
+            'Traumatic brain injury (TBI)': { share: 0.65, growthMul: 1.04 },
+          },
+        },
+      },
+    },
+    'End-User Setting': {
+      share: 0.45,
+      children: {
+        'Institutional Healthcare': {
+          share: 0.42,
+          children: {
+            'Rehabilitation hospitals': { share: 0.4, growthMul: 1.0 },
+            'Neurology clinics': { share: 0.35, growthMul: 1.02 },
+            'Long-term care centers': { share: 0.25, growthMul: 1.01 },
+          },
+        },
+        'Home Care Settings': {
+          share: 0.32,
+          children: {
+            'Direct-to-patient deployment': { share: 0.5, growthMul: 1.14 },
+            'Caregiver-assisted usage': { share: 0.5, growthMul: 1.1 },
+          },
+        },
+        'Research & Clinical Trials': {
+          share: 0.26,
+          children: {
+            Universities: { share: 0.55, growthMul: 1.07 },
+            'Neuroscience labs': { share: 0.45, growthMul: 1.09 },
+          },
+        },
+      },
+    },
+  },
+};
+
+const byDistributionRoot = {
+  'Public Healthcare Systems': {
+    share: 0.22,
+    children: {
+      'Government procurement': { share: 1, growthMul: 0.98 },
+    },
+  },
+  'Private Healthcare Providers': {
+    share: 0.35,
+    children: {
+      'Private hospitals': { share: 0.55, growthMul: 1.05 },
+      'Specialty rehab centers': { share: 0.45, growthMul: 1.08 },
+    },
+  },
+  'Direct-to-Consumer (D2C)': {
+    share: 0.18,
+    children: {
+      'At-home devices (non-invasive BCI)': { share: 1, growthMul: 1.15 },
+    },
+  },
+  'Research Grants / Institutional Funding': {
+    share: 0.25,
+    children: {
+      'Public funding bodies': { share: 0.55, growthMul: 1.04 },
+      'Innovation programs': { share: 0.45, growthMul: 1.12 },
+    },
+  },
+};
+
 let seed = 42;
 function seededRandom() {
   seed = (seed * 16807 + 0) % 2147483647;
@@ -129,75 +190,96 @@ function generateTimeSeries(baseValue, growthRate, roundFn) {
   return series;
 }
 
-function generateData(isVolume) {
-  const data = {};
+/**
+ * Build nested JSON: inner nodes are objects; leaves get year maps.
+ */
+function materializeTree(spec, allocatedBase, countryGrowth, roundFn) {
+  if (!spec.children) {
+    const mul = spec.growthMul ?? 1;
+    return generateTimeSeries(allocatedBase, countryGrowth * mul, roundFn);
+  }
+  const out = {};
+  for (const [name, child] of Object.entries(spec.children)) {
+    const childBase = allocatedBase * child.share;
+    out[name] = materializeTree(child, childBase, countryGrowth, roundFn);
+  }
+  return out;
+}
+
+function buildTopLevelTree(rootSpec, countryBase, countryGrowth, roundFn) {
+  if (rootSpec.share === 1 && rootSpec.children) {
+    return materializeTree(rootSpec, countryBase, countryGrowth, roundFn);
+  }
+  const out = {};
+  for (const [name, node] of Object.entries(rootSpec)) {
+    const base = countryBase * node.share;
+    out[name] = materializeTree(node, base, countryGrowth, roundFn);
+  }
+  return out;
+}
+
+function generateCountryData(isVolume) {
   const roundFn = isVolume ? roundToInt : roundTo1;
-  const multiplier = isVolume ? volumePerMillionUSD : 1;
+  const mult = isVolume ? volumePerMillionUSD : 1;
+  const data = {};
 
-  // Generate data for each region and country
-  for (const [regionName, countries] of Object.entries(regions)) {
-    const regionBase = regionBaseValues[regionName] * multiplier;
-    const regionGrowth = regionGrowthRates[regionName];
+  for (const geo of GEOGRAPHIES) {
+    const countryBase = laTotalBase2021 * countryShares[geo] * mult;
+    const countryGrowth = regionGrowthRates[geo];
 
-    // Region-level data
-    data[regionName] = {};
-    for (const [segType, segments] of Object.entries(segmentTypes)) {
-      data[regionName][segType] = {};
-      for (const [segName, share] of Object.entries(segments)) {
-        const segGrowth = regionGrowth * segmentGrowthMultipliers[segType][segName];
-        const segBase = regionBase * share;
-        data[regionName][segType][segName] = generateTimeSeries(segBase, segGrowth, roundFn);
-      }
-    }
-
-    // Add "By Country" for each region
-    data[regionName]["By Country"] = {};
-    for (const country of countries) {
-      const cShare = countryShares[regionName][country];
-      // Use a slight variation of region growth per country
-      const countryGrowthVariation = 1 + (seededRandom() - 0.5) * 0.06;
-      const countryBase = regionBase * cShare;
-      const countryGrowth = regionGrowth * countryGrowthVariation;
-      data[regionName]["By Country"][country] = generateTimeSeries(countryBase, countryGrowth, roundFn);
-    }
-
-    // Country-level data
-    for (const country of countries) {
-      const cShare = countryShares[regionName][country];
-      const countryBase = regionBase * cShare;
-      const countryGrowthVariation = 1 + (seededRandom() - 0.5) * 0.04;
-      const countryGrowth = regionGrowth * countryGrowthVariation;
-
-      data[country] = {};
-      for (const [segType, segments] of Object.entries(segmentTypes)) {
-        data[country][segType] = {};
-        for (const [segName, share] of Object.entries(segments)) {
-          const segGrowth = countryGrowth * segmentGrowthMultipliers[segType][segName];
-          const segBase = countryBase * share;
-          // Add slight country-specific variation to segment share
-          const shareVariation = 1 + (seededRandom() - 0.5) * 0.1;
-          data[country][segType][segName] = generateTimeSeries(segBase * shareVariation, segGrowth, roundFn);
-        }
-      }
-    }
+    data[geo] = {
+      'By BCI Modality': buildTopLevelTree(byBciModalityRoot, countryBase, countryGrowth, roundFn),
+      'By Application': buildTopLevelTree(byApplicationRoot, countryBase, countryGrowth, roundFn),
+      'By End User': materializeTree(byEndUserRoot, countryBase, countryGrowth, roundFn),
+      'By Distribution / Procurement Channel': buildTopLevelTree(
+        byDistributionRoot,
+        countryBase,
+        countryGrowth,
+        roundFn
+      ),
+    };
   }
 
   return data;
 }
 
-// Generate both datasets
-seed = 42;
-const valueData = generateData(false);
-seed = 7777;
-const volumeData = generateData(true);
+/** Strip numeric leaves to {} for segmentation_analysis.json */
+function toStructureOnly(node) {
+  if (node === null || typeof node !== 'object' || Array.isArray(node)) {
+    return {};
+  }
+  const yKeys = Object.keys(node).filter((k) => /^\d{4}$/.test(k));
+  if (yKeys.length > 0) {
+    return {};
+  }
+  const out = {};
+  for (const [k, v] of Object.entries(node)) {
+    out[k] = toStructureOnly(v);
+  }
+  return out;
+}
 
-// Write files
+seed = 42;
+const valueData = generateCountryData(false);
+seed = 7777;
+const volumeData = generateCountryData(true);
+
 const outDir = path.join(__dirname, 'public', 'data');
 fs.writeFileSync(path.join(outDir, 'value.json'), JSON.stringify(valueData, null, 2));
 fs.writeFileSync(path.join(outDir, 'volume.json'), JSON.stringify(volumeData, null, 2));
 
-console.log('Generated value.json and volume.json successfully');
-console.log('Value geographies:', Object.keys(valueData).length);
-console.log('Volume geographies:', Object.keys(volumeData).length);
-console.log('Segment types:', Object.keys(valueData['North America']));
-console.log('Sample - North America, By Type:', JSON.stringify(valueData['North America']['By Type'], null, 2));
+const segmentationSkeleton = {};
+for (const geo of GEOGRAPHIES) {
+  segmentationSkeleton[geo] = toStructureOnly(valueData[geo]);
+}
+fs.writeFileSync(
+  path.join(outDir, 'segmentation_analysis.json'),
+  JSON.stringify(segmentationSkeleton, null, 2)
+);
+
+console.log('Generated value.json, volume.json, segmentation_analysis.json');
+console.log('Geographies:', GEOGRAPHIES.join(', '));
+console.log(
+  'Segment types:',
+  Object.keys(valueData.Brazil).join(', ')
+);

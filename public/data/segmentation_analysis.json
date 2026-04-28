@@ -1,62 +1,317 @@
 {
-  "Global": {
-    "By Type": {
-      "Sub-Normothermic Perfusion (20–34°C)": {},
-      "Warm or Normothermic Perfusion (35–37°C)": {}
+  "Brazil": {
+    "By BCI Modality": {
+      "Non-Invasive BCI": {
+        "EEG-based BCI": {
+          "Motor imagery (MI)": {},
+          "P300-based systems": {},
+          "SSVEP (Steady-State Visual Evoked Potential)": {}
+        },
+        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
+        "fNIRS-based BCI (emerging, low penetration)": {}
+      },
+      "Minimally Invasive BCI": {},
+      "Fully Invasive BCI": {
+        "Implanted cortical electrodes": {},
+        "Intracortical arrays": {},
+        "ECoG-based systems": {}
+      }
     },
-    "By Organ Type": {
-      "Liver": {},
-      "Heart": {},
-      "Lung": {},
-      "Kidney": {},
-      "Others (Pancreas, Small bowel / Intestine, Composite Tissues / Limb Perfusion (emerging use cases))": {}
-    },
-    "Application / Use Case": {
-      "Organ Preservation": {},
-      "Viability Assessment": {},
-      "Physiologic Transport": {},
-      "Reconditioning Marginal Organs": {},
-      "Others (Research Use / Protocol development)": {}
+    "By Application": {
+      "Communication Restoration": {},
+      "Environmental & Device Control": {},
+      "Mobility & Motor Assistance": {},
+      "Rehabilitation & Neuro-recovery": {}
     },
     "By End User": {
-      "Hospitals & Clinics": {},
-      "Specialty Clinic/Centers": {},
-      "Transplant Centers": {},
-      "Others (Research Institutes/Centers, Organ Procurement Organizations, etc.)": {}
+      "Clinical Condition": {
+        "Neurodegenerative Disorders": {
+          "ALS (primary target segment)": {},
+          "Multiple sclerosis (advanced stage)": {}
+        },
+        "Stroke Survivors": {
+          "Ischemic stroke (severe disability)": {},
+          "Hemorrhagic stroke": {}
+        },
+        "Spinal Cord Injury (SCI)": {
+          "Tetraplegia (high priority)": {},
+          "Paraplegia": {}
+        },
+        "Cerebral Palsy (Severe Motor Impairment)": {
+          "Non-verbal CP patients": {}
+        },
+        "Other Severe Motor Impairments": {
+          "Locked-in syndrome": {},
+          "Traumatic brain injury (TBI)": {}
+        }
+      },
+      "End-User Setting": {
+        "Institutional Healthcare": {
+          "Rehabilitation hospitals": {},
+          "Neurology clinics": {},
+          "Long-term care centers": {}
+        },
+        "Home Care Settings": {
+          "Direct-to-patient deployment": {},
+          "Caregiver-assisted usage": {}
+        },
+        "Research & Clinical Trials": {
+          "Universities": {},
+          "Neuroscience labs": {}
+        }
+      }
     },
-    "By Region": {
-      "North America": {
-        "U.S.": {},
-        "Canada": {}
+    "By Distribution / Procurement Channel": {
+      "Public Healthcare Systems": {
+        "Government procurement": {}
       },
-      "Europe": {
-        "U.K.": {},
-        "Germany": {},
-        "Italy": {},
-        "France": {},
-        "Spain": {},
-        "Russia": {},
-        "Rest of Europe": {}
+      "Private Healthcare Providers": {
+        "Private hospitals": {},
+        "Specialty rehab centers": {}
       },
-      "Asia Pacific": {
-        "China": {},
-        "India": {},
-        "Japan": {},
-        "South Korea": {},
-        "ASEAN": {},
-        "Australia": {},
-        "Rest of Asia Pacific": {}
+      "Direct-to-Consumer (D2C)": {
+        "At-home devices (non-invasive BCI)": {}
       },
-      "Latin America": {
-        "Brazil": {},
-        "Argentina": {},
-        "Mexico": {},
-        "Rest of Latin America": {}
+      "Research Grants / Institutional Funding": {
+        "Public funding bodies": {},
+        "Innovation programs": {}
+      }
+    }
+  },
+  "Argentina": {
+    "By BCI Modality": {
+      "Non-Invasive BCI": {
+        "EEG-based BCI": {
+          "Motor imagery (MI)": {},
+          "P300-based systems": {},
+          "SSVEP (Steady-State Visual Evoked Potential)": {}
+        },
+        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
+        "fNIRS-based BCI (emerging, low penetration)": {}
       },
-      "Middle East & Africa": {
-        "GCC": {},
-        "South Africa": {},
-        "Rest of Middle East & Africa": {}
+      "Minimally Invasive BCI": {},
+      "Fully Invasive BCI": {
+        "Implanted cortical electrodes": {},
+        "Intracortical arrays": {},
+        "ECoG-based systems": {}
+      }
+    },
+    "By Application": {
+      "Communication Restoration": {},
+      "Environmental & Device Control": {},
+      "Mobility & Motor Assistance": {},
+      "Rehabilitation & Neuro-recovery": {}
+    },
+    "By End User": {
+      "Clinical Condition": {
+        "Neurodegenerative Disorders": {
+          "ALS (primary target segment)": {},
+          "Multiple sclerosis (advanced stage)": {}
+        },
+        "Stroke Survivors": {
+          "Ischemic stroke (severe disability)": {},
+          "Hemorrhagic stroke": {}
+        },
+        "Spinal Cord Injury (SCI)": {
+          "Tetraplegia (high priority)": {},
+          "Paraplegia": {}
+        },
+        "Cerebral Palsy (Severe Motor Impairment)": {
+          "Non-verbal CP patients": {}
+        },
+        "Other Severe Motor Impairments": {
+          "Locked-in syndrome": {},
+          "Traumatic brain injury (TBI)": {}
+        }
+      },
+      "End-User Setting": {
+        "Institutional Healthcare": {
+          "Rehabilitation hospitals": {},
+          "Neurology clinics": {},
+          "Long-term care centers": {}
+        },
+        "Home Care Settings": {
+          "Direct-to-patient deployment": {},
+          "Caregiver-assisted usage": {}
+        },
+        "Research & Clinical Trials": {
+          "Universities": {},
+          "Neuroscience labs": {}
+        }
+      }
+    },
+    "By Distribution / Procurement Channel": {
+      "Public Healthcare Systems": {
+        "Government procurement": {}
+      },
+      "Private Healthcare Providers": {
+        "Private hospitals": {},
+        "Specialty rehab centers": {}
+      },
+      "Direct-to-Consumer (D2C)": {
+        "At-home devices (non-invasive BCI)": {}
+      },
+      "Research Grants / Institutional Funding": {
+        "Public funding bodies": {},
+        "Innovation programs": {}
+      }
+    }
+  },
+  "Mexico": {
+    "By BCI Modality": {
+      "Non-Invasive BCI": {
+        "EEG-based BCI": {
+          "Motor imagery (MI)": {},
+          "P300-based systems": {},
+          "SSVEP (Steady-State Visual Evoked Potential)": {}
+        },
+        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
+        "fNIRS-based BCI (emerging, low penetration)": {}
+      },
+      "Minimally Invasive BCI": {},
+      "Fully Invasive BCI": {
+        "Implanted cortical electrodes": {},
+        "Intracortical arrays": {},
+        "ECoG-based systems": {}
+      }
+    },
+    "By Application": {
+      "Communication Restoration": {},
+      "Environmental & Device Control": {},
+      "Mobility & Motor Assistance": {},
+      "Rehabilitation & Neuro-recovery": {}
+    },
+    "By End User": {
+      "Clinical Condition": {
+        "Neurodegenerative Disorders": {
+          "ALS (primary target segment)": {},
+          "Multiple sclerosis (advanced stage)": {}
+        },
+        "Stroke Survivors": {
+          "Ischemic stroke (severe disability)": {},
+          "Hemorrhagic stroke": {}
+        },
+        "Spinal Cord Injury (SCI)": {
+          "Tetraplegia (high priority)": {},
+          "Paraplegia": {}
+        },
+        "Cerebral Palsy (Severe Motor Impairment)": {
+          "Non-verbal CP patients": {}
+        },
+        "Other Severe Motor Impairments": {
+          "Locked-in syndrome": {},
+          "Traumatic brain injury (TBI)": {}
+        }
+      },
+      "End-User Setting": {
+        "Institutional Healthcare": {
+          "Rehabilitation hospitals": {},
+          "Neurology clinics": {},
+          "Long-term care centers": {}
+        },
+        "Home Care Settings": {
+          "Direct-to-patient deployment": {},
+          "Caregiver-assisted usage": {}
+        },
+        "Research & Clinical Trials": {
+          "Universities": {},
+          "Neuroscience labs": {}
+        }
+      }
+    },
+    "By Distribution / Procurement Channel": {
+      "Public Healthcare Systems": {
+        "Government procurement": {}
+      },
+      "Private Healthcare Providers": {
+        "Private hospitals": {},
+        "Specialty rehab centers": {}
+      },
+      "Direct-to-Consumer (D2C)": {
+        "At-home devices (non-invasive BCI)": {}
+      },
+      "Research Grants / Institutional Funding": {
+        "Public funding bodies": {},
+        "Innovation programs": {}
+      }
+    }
+  },
+  "Rest of Latin America": {
+    "By BCI Modality": {
+      "Non-Invasive BCI": {
+        "EEG-based BCI": {
+          "Motor imagery (MI)": {},
+          "P300-based systems": {},
+          "SSVEP (Steady-State Visual Evoked Potential)": {}
+        },
+        "Hybrid BCI systems (EEG + eye tracking / EMG)": {},
+        "fNIRS-based BCI (emerging, low penetration)": {}
+      },
+      "Minimally Invasive BCI": {},
+      "Fully Invasive BCI": {
+        "Implanted cortical electrodes": {},
+        "Intracortical arrays": {},
+        "ECoG-based systems": {}
+      }
+    },
+    "By Application": {
+      "Communication Restoration": {},
+      "Environmental & Device Control": {},
+      "Mobility & Motor Assistance": {},
+      "Rehabilitation & Neuro-recovery": {}
+    },
+    "By End User": {
+      "Clinical Condition": {
+        "Neurodegenerative Disorders": {
+          "ALS (primary target segment)": {},
+          "Multiple sclerosis (advanced stage)": {}
+        },
+        "Stroke Survivors": {
+          "Ischemic stroke (severe disability)": {},
+          "Hemorrhagic stroke": {}
+        },
+        "Spinal Cord Injury (SCI)": {
+          "Tetraplegia (high priority)": {},
+          "Paraplegia": {}
+        },
+        "Cerebral Palsy (Severe Motor Impairment)": {
+          "Non-verbal CP patients": {}
+        },
+        "Other Severe Motor Impairments": {
+          "Locked-in syndrome": {},
+          "Traumatic brain injury (TBI)": {}
+        }
+      },
+      "End-User Setting": {
+        "Institutional Healthcare": {
+          "Rehabilitation hospitals": {},
+          "Neurology clinics": {},
+          "Long-term care centers": {}
+        },
+        "Home Care Settings": {
+          "Direct-to-patient deployment": {},
+          "Caregiver-assisted usage": {}
+        },
+        "Research & Clinical Trials": {
+          "Universities": {},
+          "Neuroscience labs": {}
+        }
+      }
+    },
+    "By Distribution / Procurement Channel": {
+      "Public Healthcare Systems": {
+        "Government procurement": {}
+      },
+      "Private Healthcare Providers": {
+        "Private hospitals": {},
+        "Specialty rehab centers": {}
+      },
+      "Direct-to-Consumer (D2C)": {
+        "At-home devices (non-invasive BCI)": {}
+      },
+      "Research Grants / Institutional Funding": {
+        "Public funding bodies": {},
+        "Innovation programs": {}
       }
     }
   }

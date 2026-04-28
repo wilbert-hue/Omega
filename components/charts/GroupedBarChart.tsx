@@ -12,7 +12,7 @@ import {
   ResponsiveContainer
 } from 'recharts'
 import { CHART_THEME, getChartColor, CHART_COLORS } from '@/lib/chart-theme'
-import { filterData, prepareGroupedBarData, prepareIntelligentMultiLevelData, getUniqueGeographies, getUniqueSegments, getGeographyProportions } from '@/lib/data-processor'
+import { filterData, prepareGroupedBarData, prepareIntelligentMultiLevelData, getUniqueGeographies, getUniqueSegments, getGeographyProportions, hasSegmentSelectionForCurrentType } from '@/lib/data-processor'
 import { useDashboardStore } from '@/lib/store'
 import type { DataRecord } from '@/lib/types'
 
@@ -39,7 +39,7 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
     const segmentsFromSameType = advancedSegments.filter(
       (seg: any) => seg.type === filters.segmentType
     )
-    const hasUserSelectedSegments = segmentsFromSameType.length > 0
+    const hasUserSelectedSegments = hasSegmentSelectionForCurrentType(filters)
 
     // Determine effective aggregation level for BOTH filtering and chart preparation
     // When user selects a parent segment (like "Parenteral"), we want to show its children
@@ -113,8 +113,14 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
 
     // CRITICAL: Verify that when user selected a parent segment, we got the child records
     // If we only have the parent segment in filtered data, something went wrong in filtering
-    if (hasUserSelectedSegments && segmentsFromSameType.length === 1) {
-      const selectedSegment = segmentsFromSameType[0].segment
+    const singleSelectedSegment =
+      segmentsFromSameType.length === 1
+        ? segmentsFromSameType[0].segment
+        : filters.segments?.length === 1
+          ? filters.segments[0]
+          : null
+    if (hasUserSelectedSegments && singleSelectedSegment) {
+      const selectedSegment = singleSelectedSegment
       // Check if filtered data contains the selected segment directly (bad) or its children (good)
       const hasParentInData = allSegmentNames.includes(selectedSegment)
       const hasOnlyParent = hasParentInData && allSegmentNames.length === 1
@@ -224,7 +230,12 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
         const uniqueGeographies = (hasOnlyGlobalRecords && !filters.geographies.includes('Global'))
           ? filters.geographies
           : getUniqueGeographies(filtered)
-        const uniqueSegments = getUniqueSegments(filtered)
+        // Quick Filters set parent segments in `filters.segments`; getUniqueSegments returns leaf names.
+        // Stack keys must match prepareIntelligentMultiLevelData (`geo::selectedSegment`).
+        const uniqueSegments =
+          filters.segments.length > 1
+            ? [...filters.segments]
+            : getUniqueSegments(filtered)
 
         stackedSeries = {
           primary: uniqueGeographies,
