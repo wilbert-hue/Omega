@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
+const years = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
 
 /**
  * Region weights (sum = 1) and per-country weights within each region (normalized in code).
@@ -49,7 +49,7 @@ const COUNTRIES_BY_REGION = {
   },
 };
 
-/** Global market (USD million), 2021 — split across all countries */
+/** Global market (USD million), anchored at 2021 — split across all countries */
 const globalTotalBase2021 = 520;
 
 const volumePerMillionUSD = 520;
@@ -142,7 +142,8 @@ function generateTimeSeries(baseValue, growthRate, roundFn) {
   const series = {};
   for (let i = 0; i < years.length; i++) {
     const year = years[i];
-    const rawValue = baseValue * Math.pow(1 + growthRate, i);
+    // i=0 is 2020: one step before the 2021 anchor (baseValue)
+    const rawValue = baseValue * Math.pow(1 + growthRate, i - 1);
     series[year] = roundFn(addNoise(rawValue));
   }
   return series;

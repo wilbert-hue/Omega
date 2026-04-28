@@ -1234,7 +1234,7 @@ export async function processJsonDataAsync(
     }
     const startYear = Math.min(...allYears)
     const forecastYear = Math.max(...allYears)
-    const baseYear = startYear + 5 // Base year = 2026 for 2021-2033 data
+    const baseYear = startYear + 5 // e.g. 2025 for 2020-2033 (forecast starts after base)
     // Historical/Forecast split: years before base year are historical
     const historicalEndYear = baseYear - 1 // 2025
     console.log(`Years: ${startYear} to ${forecastYear}, base: ${baseYear}, historical end: ${historicalEndYear}`)
@@ -1479,7 +1479,7 @@ export async function processJsonDataAsync(
       forecast_years: allYears.filter(y => y > historicalEndYear),
       currency: 'USD',
       value_unit: 'Million',
-      volume_unit: 'Million Units',
+      volume_unit: 'Tons',
       has_value: valueRecords.length > 0,
       has_volume: volumeRecords.length > 0,
     }
